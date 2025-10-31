@@ -1,10 +1,14 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,8 +23,14 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+
+    @JsonIgnore
+    //Um cliente pode ter vários pedidos
+    @OneToMany(mappedBy = "client") // O mapped aponta para o nome da variavel que está mapeada no Order
+    private List<Order> orders = new ArrayList<>();
     public User() {
     }
+
 
     public User(Long id, String nome, String phone, String password) {
         super();
@@ -28,6 +38,10 @@ public class User implements Serializable {
         this.nome = nome;
         this.phone = phone;
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     public long getId() {

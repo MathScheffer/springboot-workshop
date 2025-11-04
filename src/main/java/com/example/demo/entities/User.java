@@ -2,8 +2,6 @@ package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,7 +17,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // define a estratégia de autoincremento
     private Long id;
-    private String nome;
+    private String name;
+    private  String email;
     private String phone;
     private String password;
 
@@ -32,10 +31,10 @@ public class User implements Serializable {
     }
 
 
-    public User(Long id, String nome, String phone, String password) {
+    public User(Long id, String name, String phone, String password) {
         super();
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.phone = phone;
         this.password = password;
     }
@@ -52,12 +51,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
@@ -68,12 +67,20 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public String getPassord() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassord(String passord) {
-        this.password = passord;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

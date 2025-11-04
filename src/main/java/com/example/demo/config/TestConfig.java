@@ -73,5 +73,14 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+        Payment pgto1 = new Payment(null,Instant.parse("2019-07-22T15:21:22Z"), o1);
+        Payment pgto2 = new Payment(null,Instant.parse("2019-07-22T15:21:22Z"), o3);
+        o1.setPayment(pgto1);
+        o3.setPayment(pgto2);
+        //No relacionamento One to One salvamos apenas a entidade Necessaria, ou seja:
+        //Um pedido pode ter 1 ou 0 pagamentos, mas um pagamento deve ter um pedido. Sendo assim, salvamos apenas no
+        //pedio:
+        orderRepository.saveAll(Arrays.asList(o1,o3));
     }
 }

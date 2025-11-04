@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import org.aspectj.weaver.ast.Or;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,9 +19,9 @@ public class OrderItem implements Serializable {
      */
     @EmbeddedId //informa que esta classe será considerada como id
     private OrderItemPK id = new OrderItemPK();
-
     private Integer quantity;
     private double price;
+
 
     public OrderItem() {
     }
@@ -32,6 +31,11 @@ public class OrderItem implements Serializable {
         this.id.setProduct(product);
         this.quantity = quantity;
         this.price = price;
+    }
+
+    //Para o jpa interpretar o método, necessariamente devemos colocar um GET como prefixo
+    public Double getSubtotal(){
+        return quantity * price;
     }
 
     @JsonIgnore

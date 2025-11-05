@@ -1,7 +1,9 @@
 package com.example.demo.entities;
 
+import com.example.demo.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -30,10 +32,24 @@ public class User implements Serializable {
     public User() {
     }
 
-
+    public User(UserDTO user){
+//        BeanUtils.copyProperties(user, this);
+        super();
+        this.id = user.getId();
+        this.name = user.getName();
+        this.phone = user.getPhone();
+        this.password = user.getPassword();
+    }
     public User(Long id, String name, String phone, String password) {
         super();
         this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.password = password;
+    }
+    public User( String name, String phone, String password) {
+        super();
+        this.id = null;
         this.name = name;
         this.phone = phone;
         this.password = password;

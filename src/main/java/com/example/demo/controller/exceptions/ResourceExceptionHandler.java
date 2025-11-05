@@ -13,7 +13,7 @@ import java.time.Instant;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<StandardError> resoucerNotFound(ResourceNotFoundException e, HttpServletRequest r){
         String error  = "Resource Not found";
         HttpStatus status = HttpStatus.NOT_FOUND;

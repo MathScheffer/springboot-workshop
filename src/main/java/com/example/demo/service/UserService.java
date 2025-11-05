@@ -3,10 +3,10 @@ package com.example.demo.service;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,16 +35,22 @@ public class UserService {
 
     public void delete(Long id){
         repository.deleteById(id);
+
     }
 
     public User update(User obj, Long id){
-        //O findById usa o objeto do banco de dados. O reference já utilizada apenas um "monitoramento" dos dados.
-        User user = repository.getReferenceById(id);
-        updateData(user, obj);
-        return repository.save(user);
+        try{
+            //O findById usa o objeto do banco de dados. O reference já utilizada apenas um "monitoramento" dos dados.
+            User user = repository.getReferenceById(id);
+            updateObjetcData(user, obj);
+
+            return repository.save(user);
+        }catch (EntityNotFoundException e){
+            throw  new ResourceNotFoundException(id);
+        }
     }
 
-    private void updateData(User user, User obj) {
+    private void updateObjetcData(User user, User obj) {
         user.setName(obj.getName());
         user.setEmail(obj.getEmail());
         user.setPhone(obj.getPhone());
